@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Studio - ContentCreator Pro</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Flag Icons CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+    
+    <!-- Boxicons pentru iconițe premium -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- Verificare autentificare -->
+    <script>
+        (function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a8a4e6;
+            --success-color: #00b894;
+            --danger-color: #d63031;
+            --warning-color: #fdcb6e;
+            --dark-bg: #1e1e2e;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-primary: #2d3436;
+            --text-muted: #636e72;
+            --border-color: #e9ecef;
+            --hover-shadow: 0 8px 15px rgba(0,0,0,0.08);
+        }
+
+        [data-theme="dark"] {
+            --light-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text-primary: #f8f9fa;
+            --text-muted: #b2bec3;
+            --border-color: #2d3a5e;
+            --hover-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .logo i {
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--primary-color), #a363d9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Language Switcher - CU STEGURI */
+        .language-switcher {
+            display: flex;
+            gap: 0.3rem;
+            margin-right: 0.5rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.3rem 0.6rem;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .lang-btn .fi {
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* BUTON DASHBOARD CU SĂGEATĂ SPRE STÂNGA - ADAUGAT */
+        .dashboard-btn {
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            text-decoration: none;
+            border: none;
+            outline: none;
+        }
+
+        .dashboard-btn:hover {
+            transform: translateX(-3px) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+            background: linear-gradient(135deg, #7b6ced, #6c5ce7);
+        }
+
+        .dashboard-btn:active {
+            transform: translateX(-1px) translateY(0);
+        }
+
+        .dashboard-btn .arrow-icon {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-btn:hover .arrow-icon {
+            transform: translateX(-3px);
+        }
+
+        /* User Menu Premium */
+        .user-menu {
+            position: relative;
+        }
+
+        .user-btn {
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            text-decoration: none;
+            border: none;
+            outline: none;
+        }
+
+        .user-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+            background: linear-gradient(135deg, #7b6ced, #6c5ce7);
+        }
+
+        .user-btn:active {
+            transform: translateY(0);
+        }
+
+        .user-btn i:first-child {
+            font-size: 1.1rem;
+        }
+
+        .user-btn .arrow-icon {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .user-btn:hover .arrow-icon {
+            transform: translateY(3px);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.5rem;
+            min-width: 200px;
+            display: none;
+            box-shadow: var(--hover-shadow);
+            z-index: 1000;
+        }
+
+        .user-dropdown.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .user-dropdown a:hover {
+            background: var(--light-bg);
+            transform: translateX(5px);
+        }
+
+        .user-dropdown a i {
+            width: 20px;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .user-dropdown a:hover i {
+            transform: scale(1.1);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 0.5rem 0;
+        }
+
+        .theme-toggle {
+            background: var(--border-color);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: rotate(45deg);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-large {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-section h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-section h1 span {
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-section p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 1rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--primary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .tools-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .tool-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.6rem;
+        }
+
+        .tool-icon i {
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .tool-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .tool-card p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.3;
+        }
+
+        .tool-preview {
+            background: var(--light-bg);
+            border-radius: 8px;
+            padding: 0.4rem;
+            margin: 0.4rem 0;
+            font-size: 0.7rem;
+        }
+
+        .tool-tag {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--primary-color);
+            border-radius: 12px;
+            font-size: 0.6rem;
+            font-weight: 500;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.03), rgba(168, 164, 230, 0.03));
+            border-radius: 30px;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-header p {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .guarantee-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--success-color), #00cec9);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .pricing-card.selected {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary-color);
+        }
+
+        .pricing-card.featured.selected {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .price-tag {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .currency {
+            font-size: 1.2rem;
+            vertical-align: top;
+        }
+
+        .amount {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .period {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .pricing-card h3 {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .description {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 1.2rem;
+        }
+
+        .features li {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .features li i {
+            color: var(--success-color);
+            font-size: 0.9rem;
+        }
+
+        .saving {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--success-color);
+            margin-top: 0.5rem;
+        }
+
+        /* Annual Deal */
+        .annual-deal {
+            max-width: 600px;
+            margin: 1.5rem auto 0;
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            border-radius: 60px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .annual-deal:hover {
+            transform: scale(1.02);
+        }
+
+        .annual-deal.selected {
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .deal-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .deal-content i {
+            font-size: 1.6rem;
+        }
+
+        .deal-content h4 {
+            font-size: 1rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .deal-content p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .deal-prices {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+
+        .new-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        /* Selected Plan Indicator */
+        .selected-plan {
+            text-align: center;
+            margin-top: 1.2rem;
+            padding: 0.6rem;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 40px;
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Trust Section */
+        .trust-section {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .trust-item i {
+            color: var(--success-color);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), #8b7bf5);
+            border-radius: 30px;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-section p {
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .cta-section .btn-primary {
+            background: white;
+            color: var(--primary-color);
+            font-size: 1rem;
+            padding: 0.8rem 2rem;
+        }
+
+        /* Language-specific content */
+        [data-lang="ro"] .lang-ro,
+        [data-lang="en"] .lang-en {
+            display: inline-block;
+        }
+
+        [data-lang="ro"] .lang-en,
+        [data-lang="en"] .lang-ro {
+            display: none;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+
+            .deal-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+            }
+
+            .language-switcher {
+                margin-right: 0;
+            }
+
+            .user-btn span {
+                display: none;
+            }
+            
+            .user-btn {
+                padding: 0.5rem;
+            }
+
+            .dashboard-btn span {
+                display: none;
+            }
+            
+            .dashboard-btn {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body data-lang="en">
+    <!-- Script pentru afișarea numelui utilizatorului -->
+    <script>
+        (function() {
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    if (user.fullName) {
+                        window.userName = user.fullName.split(' ')[0];
+                    }
+                } catch (e) {}
+            }
+        })();
+    </script>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-video"></i>
+                <span>ContentCreator Pro</span>
+            </div>
+            <div class="nav-right">
+                <!-- Language Switcher - CU STEGURI -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" onclick="switchLanguage('en')">
+                        <span class="fi fi-gb"></span>
+                    </button>
+                    <button class="lang-btn" onclick="switchLanguage('ro')">
+                        <span class="fi fi-ro"></span>
+                    </button>
+                </div>
+
+                <!-- BUTON DASHBOARD CU SĂGEATĂ SPRE STÂNGA -->
+                <a href="dashboard.html" class="dashboard-btn">
+                    <i class="fas fa-arrow-left arrow-icon"></i>
+                    <i class="fas fa-chart-pie"></i>
+                    <span class="lang-en">Dashboard</span>
+                    <span class="lang-ro">Panou Control</span>
+                </a>
+                
+                <!-- User Menu -->
+                <div class="user-menu">
+                    <button class="user-btn" onclick="toggleUserMenu()">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="lang-en" id="userDisplay">My Account</span>
+                        <span class="lang-ro" id="userDisplayRo">Contul meu</span>
+                        <i class="fas fa-chevron-down arrow-icon"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span class="lang-en">Dashboard</span>
+                            <span class="lang-ro">Panou Control</span>
+                        </a>
+                        <a href="profile.html">
+                            <i class="fas fa-user"></i>
+                            <span class="lang-en">Profile</span>
+                            <span class="lang-ro">Profil</span>
+                        </a>
+                        <a href="#" onclick="showSettings()">
+                            <i class="fas fa-cog"></i>
+                            <span class="lang-en">Settings</span>
+                            <span class="lang-ro">Setări</span>
+                        </a>
+                        <a href="#" onclick="showBilling()">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="lang-en">Billing</span>
+                            <span class="lang-ro">Facturare</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span class="lang-en">Logout</span>
+                            <span class="lang-ro">Deconectare</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-badge">
+                <i class="fas fa-rocket"></i>
+                <span class="lang-en">Over 1,000 active creators</span>
+                <span class="lang-ro">Peste 1.000 creatori activi</span>
+            </div>
+            <h1>
+                <span class="lang-en">Growth Studio</span>
+                <span class="lang-ro">Studio de Creștere</span> 🚀
+            </h1>
+            <p class="lang-en">Everything you need to grow your audience faster than ever</p>
+            <p class="lang-ro">Tot ce ai nevoie pentru a-ți crește audiența mai repede ca niciodată</p>
+            <a href="#pricing" class="btn-primary" style="width: auto; padding: 0.7rem 2rem;" onclick="scrollToPricing(event)">
+                <span class="lang-en">Start now from £2/month</span>
+                <span class="lang-ro">Începe acum de la £2/lună</span>
+            </a>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="tools-section">
+            <h2 class="lang-en">📦 All the tools you need</h2>
+            <h2 class="lang-ro">📦 Toate tool-urile de care ai nevoie</h2>
+            <div class="tools-grid">
+                <!-- Tool 1: Viral Score -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 class="lang-en">Viral Score</h3>
+                    <h3 class="lang-ro">Scor Viral</h3>
+                    <p class="lang-en">Predict viral potential</p>
+                    <p class="lang-ro">Prezice potențialul viral</p>
+                    <div class="tool-preview">🔥 87% score</div>
+                    <span class="tool-tag lang-en">All plans</span>
+                    <span class="tool-tag lang-ro">Toate</span>
+                </div>
+
+                <!-- Tool 2: Trend Detector -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="lang-en">Trend Detector</h3>
+                    <h3 class="lang-ro">Trenduri</h3>
+                    <p class="lang-en">What's trending now</p>
+                    <p class="lang-ro">Ce e trending acum</p>
+                    <div class="tool-preview">🔥 #viral</div>
+                    <span class="tool-tag lang-en">Starter+</span>
+                    <span class="tool-tag lang-ro">Starter+</span>
+                </div>
+
+                <!-- Tool 3: Best Time -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="lang-en">Best Time</h3>
+                    <h3 class="lang-ro">Moment Optim</h3>
+                    <p class="lang-en">Optimal posting time</p>
+                    <p class="lang-ro">Momentul ideal</p>
+                    <div class="tool-preview">⏰ 6:30 PM</div>
+                    <span class="tool-tag lang-en">All plans</span>
+                    <span class="tool-tag lang-ro">Toate</span>
+                </div>
+
+                <!-- Tool 4: Competitor Spy -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="lang-en">Competitor Spy</h3>
+                    <h3 class="lang-ro">Competitori</h3>
+                    <p class="lang-en">Track competitors</p>
+                    <p class="lang-ro">Urmărește competitorii</p>
+                    <div class="tool-preview">👀 2 accounts</div>
+                    <span class="tool-tag lang-en">Popular+</span>
+                    <span class="tool-tag lang-ro">Popular+</span>
+                </div>
+
+                <!-- Tool 5: Content Remix -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3 class="lang-en">Content Remix</h3>
+                    <h3 class="lang-ro">Remix</h3>
+                    <p class="lang-en">Repurpose content</p>
+                    <p class="lang-ro">Reutilizează conținut</p>
+                    <div class="tool-preview">🔄 3/day</div>
+                    <span class="tool-tag lang-en">Popular+</span>
+                    <span class="tool-tag lang-ro">Popular+</span>
+                </div>
+
+                <!-- Tool 6: Auto-Reply -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-reply"></i>
+                    </div>
+                    <h3 class="lang-en">Auto-Reply</h3>
+                    <h3 class="lang-ro">Auto-Răspuns</h3>
+                    <p class="lang-en">Smart comment replies</p>
+                    <p class="lang-ro">Răspunsuri inteligente</p>
+                    <div class="tool-preview">💬 50/day</div>
+                    <span class="tool-tag lang-en">Popular+</span>
+                    <span class="tool-tag lang-ro">Popular+</span>
+                </div>
+
+                <!-- Tool 7: Collaboration -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="lang-en">Collaboration</h3>
+                    <h3 class="lang-ro">Colaborări</h3>
+                    <p class="lang-en">Find collaborators</p>
+                    <p class="lang-ro">Găsește colaboratori</p>
+                    <div class="tool-preview">🤝 3 matches</div>
+                    <span class="tool-tag lang-en">Pro</span>
+                    <span class="tool-tag lang-ro">Pro</span>
+                </div>
+
+                <!-- Tool 8: Smart Calendar -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="lang-en">Smart Calendar</h3>
+                    <h3 class="lang-ro">Calendar AI</h3>
+                    <p class="lang-en">AI-powered schedule</p>
+                    <p class="lang-ro">Programare cu AI</p>
+                    <div class="tool-preview">📅 Best: Thursday</div>
+                    <span class="tool-tag lang-en">Pro</span>
+                    <span class="tool-tag lang-ro">Pro</span>
+                </div>
+
+                <!-- Tool 9: Challenges -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="lang-en">Challenges</h3>
+                    <h3 class="lang-ro">Provocări</h3>
+                    <p class="lang-en">Growth challenges</p>
+                    <p class="lang-ro">Provocări de creștere</p>
+                    <div class="tool-preview">🏆 7-day challenge</div>
+                    <span class="tool-tag lang-en">Pro</span>
+                    <span class="tool-tag lang-ro">Pro</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div id="pricing" class="pricing-section">
+            <div class="pricing-header">
+                <h2 class="lang-en">Simple, transparent pricing</h2>
+                <h2 class="lang-ro">Prețuri simple, transparente</h2>
+                <p class="lang-en">Start from just <strong>£2/month</strong> ☕</p>
+                <p class="lang-ro">Începe de la doar <strong>£2/lună</strong> ☕</p>
+                <div class="guarantee-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span class="lang-en">30-day money-back</span>
+                    <span class="lang-ro">30 zile garanție</span>
+                </div>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Card Starter - £2 -->
+                <div class="pricing-card starter" onclick="selectPlan('starter')">
+                    <div class="price-tag">
+                        <span class="currency">£</span>
+                        <span class="amount">2</span>
+                        <span class="period">/mo</span>
+                    </div>
+                    <h3>Starter</h3>
+                    <p class="description lang-en">For beginners</p>
+                    <p class="description lang-ro">Pentru începători</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Viral Score (5/day)</li>
+                        <li><i class="fas fa-check-circle"></i> Best Time Posting</li>
+                        <li><i class="fas fa-check-circle"></i> Daily Trends</li>
+                        <li><i class="fas fa-check-circle"></i> No ads</li>
+                    </ul>
+                    <button class="btn-primary btn-large" onclick="event.stopPropagation(); subscribe('starter')">
+                        <span class="lang-en">Start with £2</span>
+                        <span class="lang-ro">Începe cu £2</span>
+                    </button>
+                </div>
+
+                <!-- Card Popular - £5 -->
+                <div class="pricing-card popular featured" onclick="selectPlan('popular')">
+                    <div class="popular-badge lang-en">🔥 Most Popular</div>
+                    <div class="popular-badge lang-ro">🔥 Cel mai ales</div>
+                    <div class="price-tag">
+                        <span class="currency">£</span>
+                        <span class="amount">5</span>
+                        <span class="period">/mo</span>
+                    </div>
+                    <h3>Popular</h3>
+                    <p class="description lang-en">For growth</p>
+                    <p class="description lang-ro">Pentru creștere</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Viral Score (25/day)</li>
+                        <li><i class="fas fa-check-circle"></i> Competitor Spy (2)</li>
+                        <li><i class="fas fa-check-circle"></i> Content Remix (3/day)</li>
+                        <li><i class="fas fa-check-circle"></i> Auto-Reply (50/day)</li>
+                        <li><i class="fas fa-check-circle"></i> Priority support</li>
+                    </ul>
+                    <button class="btn-primary btn-large" onclick="event.stopPropagation(); subscribe('popular')">
+                        <span class="lang-en">Choose Popular</span>
+                        <span class="lang-ro">Alege Popular</span>
+                    </button>
+                </div>
+
+                <!-- Card Pro - £7 -->
+                <div class="pricing-card pro" onclick="selectPlan('pro')">
+                    <div class="price-tag">
+                        <span class="currency">£</span>
+                        <span class="amount">7</span>
+                        <span class="period">/mo</span>
+                    </div>
+                    <h3>Pro</h3>
+                    <p class="description lang-en">For serious creators</p>
+                    <p class="description lang-ro">Pentru profesioniști</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Unlimited Viral Score</li>
+                        <li><i class="fas fa-check-circle"></i> Competitor Spy (10)</li>
+                        <li><i class="fas fa-check-circle"></i> Unlimited Content Remix</li>
+                        <li><i class="fas fa-check-circle"></i> Collaboration Finder</li>
+                        <li><i class="fas fa-check-circle"></i> Smart Calendar AI</li>
+                        <li><i class="fas fa-check-circle"></i> VIP Support</li>
+                    </ul>
+                    <button class="btn-primary btn-large" onclick="event.stopPropagation(); subscribe('pro')">
+                        <span class="lang-en">Choose Pro</span>
+                        <span class="lang-ro">Alege Pro</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Annual Deal -->
+            <div class="annual-deal" onclick="toggleAnnualDeal()">
+                <div class="deal-content">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <h4 class="lang-en">🎁 Annual - 2 months free!</h4>
+                        <h4 class="lang-ro">🎁 Anual - 2 luni gratuite!</h4>
+                        <p class="lang-en">Pay for 10, get 12 months</p>
+                        <p class="lang-ro">Plătești 10, primești 12 luni</p>
+                    </div>
+                    <div class="deal-prices">
+                        <span class="old-price">£84</span>
+                        <span class="new-price">£70</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selected Plan Indicator -->
+            <div class="selected-plan" id="selectedPlanDisplay">
+                <span class="lang-en">👆 Click any plan to select</span>
+                <span class="lang-ro">👆 Click pe un plan pentru a selecta</span>
+            </div>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="trust-section">
+            <div class="trust-item">
+                <i class="fas fa-lock"></i>
+                <span class="lang-en">SSL Secure</span>
+                <span class="lang-ro">Securizat SSL</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-undo"></i>
+                <span class="lang-en">30-day guarantee</span>
+                <span class="lang-ro">30 zile garanție</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-headset"></i>
+                <span class="lang-en">24/7 Support</span>
+                <span class="lang-ro">Suport 24/7</span>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-users"></i>
+                <span class="lang-en">1,000+ creators</span>
+                <span class="lang-ro">1.000+ creatori</span>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 class="lang-en">Start growing today! 🚀</h2>
+            <h2 class="lang-ro">Începe să crești azi! 🚀</h2>
+            <p class="lang-en">30-day money-back guarantee</p>
+            <p class="lang-ro">30 zile garanție</p>
+            <a href="#pricing" class="btn-primary" style="background: white; color: var(--primary-color);" onclick="scrollToPricing(event)">
+                <span class="lang-en">Choose your plan</span>
+                <span class="lang-ro">Alege-ți planul</span>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // ===== VARIABILE GLOBALE =====
+        let selectedPlan = null;
+        let isAnnual = false;
+
+        // ===== FUNCȚII PENTRU MENIU =====
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Închide dropdown-ul la click în afară
+        window.addEventListener('click', function(event) {
+            if (!event.target.closest('.user-menu')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown) dropdown.classList.remove('show');
+            }
+        });
+
+        // Afișează numele utilizatorului
+        function displayUserName() {
+            const userDisplay = document.getElementById('userDisplay');
+            const userDisplayRo = document.getElementById('userDisplayRo');
+            if (window.userName) {
+                if (userDisplay) userDisplay.textContent = window.userName;
+                if (userDisplayRo) userDisplayRo.textContent = window.userName;
+            }
+        }
+
+        // Funcții pentru dropdown
+        function showSettings() {
+            toggleUserMenu();
+            showNotification(getLang() === 'en' ? 'Account settings' : 'Setări cont', 'info');
+        }
+
+        function showBilling() {
+            toggleUserMenu();
+            showNotification(getLang() === 'en' ? 'Billing page' : 'Pagina de facturare', 'info');
+        }
+
+        function logout() {
+            toggleUserMenu();
+            
+            // Ștergem toate datele de autentificare
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('user');
+            localStorage.removeItem('rememberMe');
+            
+            showNotification(
+                getLang() === 'en' ? 'Successfully logged out!' : 'Te-ai deconectat cu succes!', 
+                'success'
+            );
+            
+            // Redirecționăm la pagina de login
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+        }
+
+        // ===== FUNCȚII PENTRU TEMĂ =====
+        function initTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                if (document.documentElement.hasAttribute('data-theme')) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    showNotification(
+                        getLang() === 'en' ? '🌙 Light theme activated' : '🌙 Tema deschisă activată',
+                        'info'
+                    );
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    showNotification(
+                        getLang() === 'en' ? '🌞 Dark theme activated' : '🌞 Tema întunecată activată',
+                        'info'
+                    );
+                }
+            });
+        }
+
+        // ===== FUNCȚII PENTRU LIMBĂ =====
+        function switchLanguage(lang) {
+            document.body.setAttribute('data-lang', lang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerHTML.includes(lang)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            localStorage.setItem('language', lang);
+            updateSelectedPlanDisplay();
+        }
+
+        function getLang() {
+            return document.body.getAttribute('data-lang') || 'en';
+        }
+
+        // ===== FUNCȚII PENTRU PLANURI =====
+        function selectPlan(plan) {
+            // Eliminăm clasa 'selected' de la toate cardurile
+            document.querySelectorAll('.pricing-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Adăugăm clasa 'selected' doar la cardul selectat
+            const selectedCard = document.querySelector(`.pricing-card.${plan}`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            // Salvăm planul selectat
+            selectedPlan = plan;
+            
+            // Actualizăm afișajul
+            updateSelectedPlanDisplay();
+            
+            // Notificare
+            const lang = getLang();
+            showNotification(
+                lang === 'en' ? `✅ ${plan} plan selected` : `✅ Planul ${plan} selectat`,
+                'success'
+            );
+        }
+
+        function toggleAnnualDeal() {
+            isAnnual = !isAnnual;
+            
+            const annualDeal = document.querySelector('.annual-deal');
+            if (isAnnual) {
+                annualDeal.classList.add('selected');
+            } else {
+                annualDeal.classList.remove('selected');
+            }
+            
+            updatePricesForAnnual();
+            updateSelectedPlanDisplay();
+            
+            const lang = getLang();
+            showNotification(
+                lang === 'en'
+                    ? isAnnual ? '📅 Annual billing selected' : '📅 Monthly billing selected'
+                    : isAnnual ? '📅 Facturare anuală' : '📅 Facturare lunară',
+                'info'
+            );
+        }
+
+        function updatePricesForAnnual() {
+            const starterAmount = document.querySelector('.pricing-card.starter .amount');
+            const popularAmount = document.querySelector('.pricing-card.popular .amount');
+            const proAmount = document.querySelector('.pricing-card.pro .amount');
+            
+            if (isAnnual) {
+                if (starterAmount) starterAmount.textContent = '20';
+                if (popularAmount) popularAmount.textContent = '50';
+                if (proAmount) proAmount.textContent = '70';
+            } else {
+                if (starterAmount) starterAmount.textContent = '2';
+                if (popularAmount) popularAmount.textContent = '5';
+                if (proAmount) proAmount.textContent = '7';
+            }
+        }
+
+        function updateSelectedPlanDisplay() {
+            const display = document.getElementById('selectedPlanDisplay');
+            const lang = getLang();
+            
+            if (!selectedPlan) {
+                display.innerHTML = lang === 'en' 
+                    ? '👆 Click any plan to select'
+                    : '👆 Click pe un plan pentru a selecta';
+                return;
+            }
+            
+            const annualText = isAnnual ? '(Annual)' : '(Monthly)';
+            const annualTextRo = isAnnual ? '(Anual)' : '(Lunar)';
+            
+            display.innerHTML = lang === 'en'
+                ? `✅ Selected: ${selectedPlan} ${annualText}`
+                : `✅ Selectat: ${selectedPlan} ${annualTextRo}`;
+        }
+
+        // ===== FUNCȚII PENTRU ABONARE =====
+        function subscribe(plan) {
+            if (!selectedPlan) {
+                selectPlan(plan);
+            }
+            
+            const lang = getLang();
+            const billingType = isAnnual ? 'annual' : 'monthly';
+            
+            showNotification(
+                lang === 'en' 
+                    ? `✅ Redirecting to checkout...` 
+                    : `✅ Redirecționare către plată...`,
+                'success'
+            );
+            
+            setTimeout(() => {
+                window.location.href = `checkout.html?plan=${plan}&billing=${billingType}`;
+            }, 1500);
+        }
+
+        // ===== FUNCȚII UTILITARE =====
+        function scrollToPricing(event) {
+            event.preventDefault();
+            document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'success' ? 'linear-gradient(135deg, #00b894, #00cec9)' : '#6c5ce7'};
+                color: white;
+                padding: 10px 20px;
+                border-radius: 40px;
+                font-size: 0.85rem;
+                z-index: 10000;
+                animation: slideUp 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 2000);
+        }
+
+        // ===== INITIALIZARE =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setăm limba salvată sau engleza
+            const savedLang = localStorage.getItem('language') || 'en';
+            document.body.setAttribute('data-lang', savedLang);
+            
+            // Activăm butonul corect
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerHTML.includes(savedLang)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            initTheme();
+            updateSelectedPlanDisplay();
+            displayUserName();
+        });
+    </script>
+</body>
+</html>
